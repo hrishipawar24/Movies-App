@@ -559,3 +559,117 @@ code {
 .logo-title:hover {
   opacity: 0.8;
 }
+
+/* Hero Search Styling (Google Style) */
+.header-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition: all 0.5s ease;
+}
+
+.hero-logo {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -2px;
+}
+
+.hero-tagline {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+.hero-search-form {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 5rem auto;
+}
+
+.search-wrapper {
+    display: flex;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-glass);
+    padding: 0.5rem;
+    border-radius: 100px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+
+.search-wrapper:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(1.02);
+}
+
+.hero-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.hero-search-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0 2.5rem;
+    border-radius: 100px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.hero-search-btn:hover {
+    background: #4f46e5;
+}
+
+@media (max-width: 600px) {
+    .hero-logo { font-size: 3.5rem; }
+    .hero-tagline { font-size: 1.1rem; }
+    .search-wrapper { flex-direction: column; border-radius: 20px; padding: 1rem; }
+    .hero-search-btn { padding: 1rem; border-radius: 20px; margin-top: 0.5rem; }
+}
+
+/* Back Navigation Styling */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.back-btn {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: translateX(-5px);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.back-btn svg {
+    width: 20px;
+    height: 20px;
+}

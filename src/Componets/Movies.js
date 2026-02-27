@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Movie from './Movie';
 import MovieDetailsModal from './MovieDetailsModal';
@@ -12,7 +12,7 @@ function Movies() {
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
   async function getMovies(query) {
-    if (!query) return;
+    if (!query || !query.trim()) return;
     setIsLoading(true);
     setError(null);
     setHasSearched(true);
@@ -39,31 +39,62 @@ function Movies() {
     getMovies(searchTerm);
   };
 
+  const resetHome = () => {
+    setSearchTerm('');
+    setHasSearched(false);
+    setMovies([]);
+    setError(null);
+  };
+
   return (
     <div className='movies-container'>
-      <header className='search-header'>
+      <header className={`search-header ${!hasSearched ? 'header-hidden' : ''}`}>
         <div className='header-content'>
-          <h1 className='logo-title' onClick={() => { setSearchTerm(''); setHasSearched(false); setMovies([]); }}>CineQuest</h1>
-          <form onSubmit={handleSearch} className='search-form'>
-            <input
-              type="text"
-              placeholder="Search for movies, series, or episodes..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className='search-input'
-            />
-            <button type="submit" disabled={isLoading || !searchTerm.trim()} className='search-btn'>
-              {isLoading ? 'Searching...' : 'Search'}
+          <div className='header-left'>
+            <button className='back-btn' onClick={resetHome} title="Go Back to Home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             </button>
-          </form>
+            <h1 className='logo-title' onClick={resetHome}>CineQuest</h1>
+          </div>
+          {hasSearched && (
+            <form onSubmit={handleSearch} className='search-form'>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className='search-input'
+              />
+              <button type="submit" disabled={isLoading} className='search-btn'>
+                {isLoading ? '...' : 'Search'}
+              </button>
+            </form>
+          )}
         </div>
       </header>
 
       <main className="main-content">
         {!hasSearched && !isLoading && !error ? (
           <div className="home-hero">
-            <h2>Welcome to CineQuest</h2>
-            <p>Discover your next favorite movie, TV show, or series.</p>
+            <h1 className='hero-logo'>CineQuest</h1>
+            <p className='hero-tagline'>Explore the world of cinema in one click.</p>
+            
+            <form onSubmit={handleSearch} className='hero-search-form'>
+              <div className='search-wrapper'>
+                <input
+                  type="text"
+                  placeholder="Ask CineQuest for a movie, series, or actor..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className='hero-search-input'
+                  autoFocus
+                />
+                <button type="submit" className='hero-search-btn'>
+                  Search Now
+                </button>
+              </div>
+            </form>
+
             <div className="hero-features">
               <div className="feature-card">
                 <h3>Millions of Titles</h3>
@@ -93,8 +124,8 @@ function Movies() {
           </div>
         ) : (
           <div className="status-state empty-state">
-            <h2>No results yet</h2>
-            <p>We couldn't find anything matching your search. Try another title.</p>
+            <h2>No results found</h2>
+            <p>Try a different keyword or check for typos.</p>
           </div>
         )}
       </main>
